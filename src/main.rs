@@ -80,26 +80,26 @@ fn main(){
                 }
             },
 
-            // "mem" => {
-            //     let memTotal = execute_shell_command("cat /proc/meminfo | grep MemTotal");
-            //     let memFree = execute_shell_command("cat /proc/meminfo | grep MemFree");
-            //     let buffers = execute_shell_command("cat /proc/meminfo | grep Buffers");
-            //     let cached = execute_shell_command("cat /proc/meminfo | grep Cached");
+            "mem" => {
+                let mem_total = execute_shell_command("cat /proc/meminfo | grep MemTotal");
+                let mem_free = execute_shell_command("cat /proc/meminfo | grep MemFree");
+                let buffers = execute_shell_command("cat /proc/meminfo | grep Buffers");
+                let cached = execute_shell_command("cat /proc/meminfo | grep Cached");
             
-            //     if memTotal.status.success() && memFree.status.success() && buffers.status.success() && cached.status.success() {
-            //         let mem_total_str = String::from_utf8_lossy(&memTotal.stdout);
-            //         let mem_free_str = String::from_utf8_lossy(&memFree.stdout);
-            //         let buffers_str = String::from_utf8_lossy(&buffers.stdout);
-            //         let cached_str = String::from_utf8_lossy(&cached.stdout);
+                if mem_total.status.success() && mem_free.status.success() && buffers.status.success() && cached.status.success() {
+                    let mem_total_str = String::from_utf8_lossy(&mem_total.stdout);
+                    let mem_free_str = String::from_utf8_lossy(&mem_free.stdout);
+                    let buffers_str = String::from_utf8_lossy(&buffers.stdout);
+                    let cached_str = String::from_utf8_lossy(&cached.stdout);
             
-            //         println!("{}", mem_total_str);
-            //         println!("{}", mem_free_str);
-            //         println!("{}", buffers_str);
-            //         println!("{}", cached_str);
-            //     } else {
-            //         eprintln!("Command failed with an error code.");
-            //     }
-            // }
+                    println!("{}", mem_total_str);
+                    println!("{}", mem_free_str);
+                    println!("{}", buffers_str);
+                    println!("{}", cached_str);
+                } else {
+                    eprintln!("Command failed with an error code.");
+                }
+            }
             
             command => {
                 let child = Command::new(command)
@@ -154,12 +154,12 @@ fn random_quote() {
 
 }
 
-// fn execute_shell_command(command: &str) -> std::process::Output {
-//     Command::new("sh")
-//         .arg("-c")
-//         .arg(command)
-//         .stdout(Stdio::piped())
-//         .stderr(Stdio::piped())
-//         .output()
-//         .expect("Failed to read command.")
-// }
+fn execute_shell_command(command: &str) -> std::process::Output {
+    Command::new("sh")
+        .arg("-c")
+        .arg(command)
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .output()
+        .expect("Failed to read command.")
+}
